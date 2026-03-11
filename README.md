@@ -18,11 +18,11 @@ When you click the extension icon on a supported DocBook page, it:
 
 This extension is intentionally scoped to InterSystems IRIS documentation:
 
-- Host must be: `docs.intersystems.com`
+- Host must be: `docs.intersystems.com`.
 - Path must include one of:
-  - `/csp/docbook/DocBook.UI.Page.cls`
-  - `/csp/docbook/Doc.View.cls`
-- URL must include a `KEY=...` query parameter
+  - `/csp/docbook/DocBook.UI.Page.cls`.
+  - `/csp/docbook/Doc.View.cls`.
+- URL must include a `KEY=...` query parameter.
 
 If you click the icon on an unsupported page, the viewer opens with an explanatory error.
 
