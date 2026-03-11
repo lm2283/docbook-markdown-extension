@@ -1,6 +1,8 @@
 # IRIS DocBook -> Markdown (Browser Extension)
 
-Convert InterSystems IRIS DocBook documentation pages into clean Markdown, with a safe preview, copy/download actions, and strictly offline processing (no network calls from the extension).
+This is a browser extension that converts online InterSystems IRIS DocBook documentation pages into clean, portable Markdown with an offline conversion pipeline and a safe preview, making it easy to incorporate product-specific information into modern AI assisted workflows. 
+
+By turning a live documentation page into a single Markdown artifact you can paste into ChatGPT, a custom GPT, or an agentic development tool, you can supply accurate project context such as APIs, configuration steps, ObjectScript examples, and constraints, which reduces hallucinations and improves code generation quality. The output is designed to be LLM friendly by flattening tabbed content, normalizing code blocks with language hints, promoting glossary entries and headings for better retrieval, and optionally stripping links or tables when you want a smaller prompt, so it fits well into prompt libraries, retrieval augmented generation pipelines, or project specific context packs that you reuse across sessions and teams.
 
 ## What it does
 
