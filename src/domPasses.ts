@@ -113,22 +113,46 @@ export function normalizeTableTitles(root: Element): void {
   }
 }
 
+function getTextWithSpaces(el: Element): string {
+  return (el.textContent || "").replace(/\s+/g, " ").trim();
+}
+
 export function promoteGlossaryTerms(root: Element): void {
   const entries = Array.from(root.querySelectorAll("div.glossentry"));
   const doc = root.ownerDocument!;
+
   for (const entry of entries) {
-    const entryId = entry.id || (entry.parentElement?.tagName === "DIV" ? entry.parentElement.id : null);
-    const term = entry.querySelector("span.glossterm, div.glossterm, span.firstterm");
+    const entryId =
+      entry.id ||
+      (entry.parentElement?.tagName === "DIV" ? entry.parentElement.id : null);
+
+    const term =
+      entry.querySelector("span.glossterm, div.glossterm") ||
+      entry.querySelector("span.firstterm") ||
+      entry.querySelector("span.literal");
+
     const hx = doc.createElement(getAppropriateHeadingLevel(entry));
     if (entryId) hx.id = entryId;
 
     if (term) {
-      hx.textContent = (term.textContent || "").trim();
+      const termText = getTextWithSpaces(term);
+
+      const isCode =
+        term.tagName === "CODE" || term.classList.contains("literal");
+
+      if (isCode) {
+        const code = doc.createElement("code");
+        code.textContent = termText;
+        hx.appendChild(code);
+      } else {
+        hx.textContent = termText;
+      }
+
       entry.before(hx);
       term.remove();
       unwrap(entry);
     } else {
-      hx.textContent = (entry.textContent || "").trim();
+      hx.textContent = (entry.textContent || "").replace(/\s+/g, " ").trim();
       entry.replaceWith(hx);
     }
   }
