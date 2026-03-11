@@ -9,8 +9,8 @@ When you click the extension icon on a supported DocBook page, it:
 - Extracts the main article DOM from the active tab (on-demand).
 - Converts DocBook HTML to Markdown using a custom pipeline.
 - Opens a viewer tab with:
-  - Markdown output (editable textarea).
-  - Sanitized preview (sandboxed iframe).
+  - Markdown output (editable `textarea`).
+  - Sanitized preview (sandboxed `iframe`).
   - One-click copy/download.
   - Optional link/table stripping.
 
