@@ -88,13 +88,11 @@ Markdown conversion is done via Turndown with a few overrides for better fidelit
 ## Security & privacy
 
 This extension is built to be conservative:
-
-* **No network access from extension pages**:
-
+* No network access from extension pages:
   * Extension CSP includes `connect-src 'none'`.
 * Runs only when you click the extension icon
-* Only extracts DOM from the **active tab**, and only on supported DocBook URLs.
-* Extracted content is stored in a session-scoped manner using **`chrome.storage.session`**.
+* Only extracts DOM from the active tab, and only on supported DocBook URLs.
+* Extracted content is stored in a session-scoped manner using `chrome.storage.session`.
   * You can clear it immediately via `Clear Session Data`.
 * Preview is hardened:
   * Markdown is rendered to HTML locally.
