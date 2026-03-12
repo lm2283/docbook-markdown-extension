@@ -1,8 +1,10 @@
-# IRIS DocBook -> Markdown (Browser Extension)
+# IRIS DocBook -> Markdown
 
-This is a browser extension that converts online InterSystems IRIS DocBook documentation pages into clean, portable Markdown with an offline conversion pipeline and a safe preview, making it easy to incorporate product-specific information into modern AI assisted workflows. 
+This is a browser extension that converts online InterSystems IRIS DocBook documentation pages into clean, portable Markdown with an offline conversion pipeline and a safe preview, making it easy to incorporate product-specific information into modern AI assisted workflows.
 
-By turning a live documentation page into a single Markdown artifact you can paste into ChatGPT, a custom GPT, or an agentic development tool, you can supply accurate project context such as APIs, configuration steps, ObjectScript examples, and constraints, which reduces hallucinations and improves code generation quality. The output is designed to be LLM friendly by flattening tabbed content, normalizing code blocks with language hints, promoting glossary entries and headings for better retrieval, and optionally stripping links or tables when you want a smaller prompt, so it fits well into prompt libraries, retrieval augmented generation pipelines, or project specific context packs that you reuse across sessions and teams.
+By turning a live documentation page into a single Markdown artefact you can paste into ChatGPT, a custom GPT, or an agentic development tool, you can supply relevant project context. Context like APIs, configuration steps, ObjectScript examples, and system-level constraints can all help reduce hallucination and improves code generation quality. 
+
+The output is designed to be LLM friendly by flattening tabbed content, normalizing code blocks with language hints, and promoting glossary entries and headings for better retrieval. Optionally, you can strip links or tables when you need to save tokens.
 
 ## What it does
 
@@ -28,35 +30,32 @@ This extension is intentionally scoped to InterSystems IRIS documentation:
 
 If you click the icon on an unsupported page, the viewer opens with an explanatory error.
 
-## Install
+## Quickstart
 
+If you just want to use the extension, you can load the pre-built `dist/` bundle from this repo.
 
-### Prerequisites
+### Download the repo as a ZIP
 
-- Node.js (recent LTS recommended).
+- On GitHub, click **Code -> Download ZIP**.
+- Unzip it locally.
 
-### Build
-
-```bash
-npm install
-npm run build
-```
+You should have a folder that contains a `dist/` directory.
 
 ### Load into Chrome
 
 1. Open `chrome://extensions`.
-2. Enable `Developer mode`.
-3. Click `Load unpacked`.
-4. Select the `dist/` folder produced by `npm run build`.
+2. Enable **Developer mode**.
+3. Click **Load unpacked**.
+4. Select the **`dist/`** folder from the unzipped repo.
 
 ### Load into Edge
 
 1. Open `edge://extensions`.
-2. Enable `Developer mode`.
-3. Click `Load unpacked`.
-4. Select the `dist/` folder produced by `npm run build`.
+2. Enable **Developer mode**.
+3. Click **Load unpacked**.
+4. Select the **`dist/`** folder from the unzipped repo.
 
-## Usage
+### Usage
 
 Open a supported IRIS DocBook page:
 
@@ -65,59 +64,72 @@ Open a supported IRIS DocBook page:
 
 In the viewer you can:
 
-* `Copy Markdown`
-* `Download .md`
-* `Copy Source URL`
-* `Clear Session Data`
-* Toggle:
-  * `Strip Links (Keep Text)`
-  * `Remove HTML Tables`
+- `Copy Markdown`
+- `Download .md`
+- `Copy Source URL`
+- `Clear Session Data`
+- Toggle:
+  - `Strip Links (Keep Text)`
+  - `Remove HTML Tables`
 
 ## Output notes
 
 The conversion pipeline does a set of targeted normalizations aimed at DocBook pages:
 
-* Flattens tabbed blocks into headings + content.
-* Promotes table titles and glossary entries into headings.
-* Normalizes code blocks and attempts language detection (e.g., ObjectScript/SQL/XML/JS/Python).
-* Converts admonitions (note/important/caution/tip/warning) into blockquotes with a label.
-* Removes images (replaces with a text placeholder when an `alt` value exists).
-* Repairs some malformed list structures.
-* Emits tables as **raw HTML** by default (optionally removable in the viewer).
+- Flattens tabbed blocks into headings + content.
+- Promotes table titles and glossary entries into headings.
+- Normalizes code blocks and attempts language detection (e.g., ObjectScript/SQL/XML/JS/Python).
+- Converts admonitions (note/important/caution/tip/warning) into blockquotes with a label.
+- Removes images (replaces with a text placeholder when an `alt` value exists).
+- Repairs some malformed list structures.
+- Emits tables as **raw HTML** by default (optionally removable in the viewer).
 
 Markdown conversion is done via Turndown with a few overrides for better fidelity.
 
 ## Security & privacy
 
 This extension is built to be conservative:
-* No network access from extension pages:
-  * Extension CSP includes `connect-src 'none'`.
-* Runs only when you click the extension icon
-* Only extracts DOM from the active tab, and only on supported DocBook URLs.
-* Extracted content is stored in a session-scoped manner using `chrome.storage.session`.
-  * You can clear it immediately via `Clear Session Data`.
-* Preview is hardened:
-  * Markdown is rendered to HTML locally.
-  * HTML is sanitized with DOMPurify and a tight allow-list.
-  * Links are rewritten to allow only `http(s)` URLs on `docs.intersystems.com`.
-  * Preview is displayed in a sandboxed `iframe` using `srcdoc`.
-  * Scripts are blocked.
+
+- No network access from extension pages:
+  - Extension CSP includes `connect-src 'none'`.
+- Runs only when you click the extension icon.
+- Only extracts DOM from the active tab, and only on supported DocBook URLs.
+- Extracted content is stored in a session-scoped manner using `chrome.storage.session`.
+  - You can clear it immediately via `Clear Session Data`.
+- Preview is hardened:
+  - Markdown is rendered to HTML locally.
+  - HTML is sanitized with DOMPurify and a tight allow-list.
+  - Links are rewritten to allow only `http(s)` URLs on `docs.intersystems.com`.
+  - Preview is displayed in a sandboxed `iframe` using `srcdoc`.
+  - Scripts are blocked.
 
 ## Development
 
-Run a local dev server:
+If you want to modify the extension or build `dist/` yourself, you'll need Node.js.
+
+### Prerequisites
+
+- Node.js (recent LTS recommended)
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run a local dev server
 
 ```bash
 npm run dev
 ```
 
-Build the unpacked extension:
+### Build the unpacked extension
 
 ```bash
 npm run build
 ```
 
-Then load `dist/` via `Load unpacked`.
+Then load the generated `dist/` folder via **Load unpacked** (see Quickstart).
 
 ## Project structure (high level)
 
